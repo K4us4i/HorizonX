@@ -23,5 +23,21 @@
     Total Events: <span id="totalEvents">5</span> | Reported Events: <span id="reportedEvents">0</span>
     </div>
 
+    <div id="event-list">
+        <div class="event-card" data-category="Cultural" data-reports="0">
+        <div class="event-title">Indra Jatra Festival</div>
+        <div class="event-date">14 September 2025</div>
+        <div class="event-location">Basantapur, Kathmandu</div>
+        <div class="event-category badge category-Cultural">Cultural</div>
+        <div class="event-desc short-desc" onclick="toggleDesc(this)">
+        A major cultural festival of Kathmandu celebrating living goddess Kumari... <span style="color:#1d3557;font-weight:bold;">[Details]</span>
+        </div>
+    </div>
+    <div class="full-desc">
+    A major cultural festival of Kathmandu celebrating living goddess Kumari and chariot processions. Traditional dances and cultural performances happen throughout the city, attracting tourists and locals alike.
+    </div>
+    <button class="fake-btn" onclick="reportFake(this)">Report Fake Event</button>
+    <button class="interested-btn" onclick="markInterested(this)">Interested</button>
+
 </body>
 </html>
