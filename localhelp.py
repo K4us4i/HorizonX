@@ -1,7 +1,7 @@
 # Local Community Help
 # Community Connectivity
 from flask import Flask, render_template, request
-import requests
+import requests # type: ignore
 
 app = Flask(__name__)
 
@@ -14,7 +14,7 @@ def home():
         url = "https://calendar.bloggernepal.com/api/today"
 
         headers = {"Content-Type": "application/json"}
-        payload = {"text": event_text}
+        payload = {"text": event_text} # type: ignore
 
         response = requests.post(url, json=payload, headers=headers)
         data = response.json()
