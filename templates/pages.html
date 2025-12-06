@@ -36,14 +36,14 @@
     fetch("/events")
         .then(res => res.json())
         .then(data => {
-            document.getElementById("events").innerHTML = JSON.stringify(data);
+            document.getElementById("events").innerHTML = data.map(e => `<p>${e.date} — ${e.localName}</p>`).join("");
         });
     }
     function loadAlerts() {
     fetch("/alerts")
         .then(res => res.json())
         .then(data => {
-            document.getElementById("alerts").innerHTML = JSON.stringify(data);
+            document.getElementById("alerts").innerHTML = data.results.map(n => `<p>${n.title}</p>`).join("");
         });
     }
     </script>
