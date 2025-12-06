@@ -7,14 +7,14 @@
     <style>
         body{
             font-family: 'Courier New', Courier, monospace;
-            background-color: aqua;
+          background-color: #fef9f4;
             max-width: 900px;
-            margin: auto;
+            margin: 0 auto;
             padding: 20px;
         }
         h1,h2{
             text-align: center;
-            color: bisque;
+            color: #333;
         }
         #searchBar{
             width:100% ;
@@ -28,7 +28,7 @@
             text-align: center;
             margin-bottom: 20px;
             font-size: 0.95em;
-            color: #1d3557;
+             color: #555;
         }
         #event-list , #alert-list,#safe-list
         {
@@ -64,13 +64,71 @@
             font-size: 0.95em;
             cursor: pointer;
         }
+        .bagde{
+            display: inline-block;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            margin-top:5px ;
+            color: aliceblue;
+        }
+        .category-cultural
+        {
+            background-color: rosybrown;
+        }
+      .category-workshop
+      {
+        background-color: beige;
+      }
+      .category-sports
+      {
+        background-color: aquamarine;
+      }
+      .category-alert{
+        background-color: bisque;
 
-         
+      }
+      button{
+        background-color: blue;
+        color: aliceblue;
+        border: none;
+        padding: 10px 14px;
+        border-radius: 6px;
+        cursor: pointer;
+        margin-top: 10px;
+        font-size: 0.95em;
+      }
+                     button:hover {
+            background-color: #ff6f1e;
+        }
 
-        
-
+   .fake-btn { background-color: #e63946; }
+  .fake-btn:hover { background-color: #b22234; }
+  .interested-btn { background-color: #2a9d8f; margin-left: 5px; }
+    .interested-btn:hover { background-color: #21867a; }
+    #overlay{
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+            z-index: 1000;
+            width: 300px;
+        }
+         #addEventForm input, #addEventForm textarea, #addEventForm select {
+            width: 100%;
+            margin: 5px 0;
+            padding: 6px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            box-sizing:border box}
+            .short-desc{.overflow:hidden;white-space: nowrap;text-overflow: ellipsis;}
+             .full-desc { display: none; white-space: normal; }
     </style>
-
 </head>
 <body>
     <h1>Community Events</h1>
