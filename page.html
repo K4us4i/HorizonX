@@ -6,9 +6,18 @@
         background-color: bisque;
         font-family: 'Courier New', Courier, monospace;
     }
+    header
+    {
+       text-align: center; 
+       color: black;
+       font-size: 30px;
+
+    }
+
+
     .container{
         padding: 20px;
-        margin: 20px;
+        margin-right: 20px;
         border-radius: 8px;
        box-shadow: 0 0 5px rgba(0,0,0,0.2);
 
@@ -19,17 +28,22 @@
       border:none;
       cursor: pointer;
 }  
-</style>
-    <title>Community Connectivity</title>
+  </style>
 </head>
 <body>
+    <header>Community Connectivity</header>
+    <div class="container" style="background-color: rgb(142, 233, 135);" style="width: 10px;" style="border: 10px;">
     <h2>Events</h2>
     <button onclick="loadEvents()">Show Events</button>
     <div id="events"></div>
+    </div>
+    <br>
 
+    <div class="container" style="background-color: rgb(142, 233, 135);" style="width: 10px;" style="border:10px">
     <h2>Disaster Alerts</h2>
     <button onclick="loadAlerts()">Show Alerts</button>
     <div id="alerts"></div>
+    </div>
 
     <script>
     function loadEvents() {
