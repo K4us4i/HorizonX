@@ -7,7 +7,14 @@
     <div clas="container">
     <h2>Events</h2>
     <form method=[POST]>
-        <button>Today</button>
+        <script>
+            <button>Today</button>
+            fetch('/https://calendar.bloggernepal.com/api/today')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('output').innerText = data.message;
+                });
+        </script>
         <button>This week</button>
         <button>This month</button>
     </form>
