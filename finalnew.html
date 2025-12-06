@@ -4,8 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        body{
+            font-family: 'Courier New', Courier, monospace;
+            background-color: aqua;
+            max-width: 900px;
+            margin: auto;
+            padding: 20px;
+        }
+    </style>
+
 </head>
 <body>
-    
+    <h1>Community Events</h1>
+    <input type="text" id="searchBar" placeholder="Search by name, location, category..." onkeyup="filterEvents()">
+
+    <div id="stats">
+    Total Events: <span id="totalEvents">5</span> | Reported Events: <span id="reportedEvents">0</span>
+    </div>
+
 </body>
 </html>

@@ -1,7 +1,7 @@
 # Local Community Help
 # Community Connectivity
 from flask import Flask, render_template, request, jsonify
-import requests  # type: ignore
+# import requests
 
 app = Flask(__name__)
 
@@ -12,16 +12,16 @@ def get_events():
      headers = {"Authorization": "Bearer YOUR_EVENTBRITE_TOKEN"
     }
 
-     response = requests.get(url, headers=headers)
-     data = response.json()
-     return jsonify(data)
+    # response = requests.get(url, headers=headers)
+    # data = response.json()
+    # return jsonify(data)
 
 @app.route("/alerts")
 def get_alerts():
     url = "https://newsdata.io/api/1/latest?apikey=pub_0862588a38234c4caf78bfb3b8f03d44&q=news"
-    response = requests.get(url)
-    data = response.json()
-    return jsonify(data)
+   # response = requests.get(url)
+    #data = response.json()
+   # return jsonify(data)
 
 @app.route("/")
 def home():
