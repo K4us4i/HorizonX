@@ -7,6 +7,11 @@
     <h2>Events</h2>
     <button onclick="loadEvents()">Show Events</button>
     <div id="events"></div>
+
+    <h2>Disaster Alerts</h2>
+    <button onclick="loadAlerts()">Show Alerts</button>
+    <div id="alerts"></div>
+
     <script>
     function loadEvents() {
     fetch("/events")
@@ -14,10 +19,14 @@
         .then(data => {
             document.getElementById("events").innerHTML = JSON.stringify(data);
         });
-}
-</script>
-<div class="container">
-    <h2>Disaster News/Alert</h2>
-    </div>
+    }
+    function loadAlerts() {
+    fetch("/alerts")
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById("alerts").innerHTML = JSON.stringify(data);
+        });
+    }
+    </script>
 </body>
 </html>  
