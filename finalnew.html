@@ -16,6 +16,40 @@
             text-align: center;
             color: bisque;
         }
+        #searchBar{
+            width:100% ;
+            padding: 10px ;
+            margin: 15px;
+            border: radius 6px; ;
+            border: 1px solid;
+            ;
+        }
+        #stats{
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+            color: #1d3557;
+        }
+        #event-list , #alert-list,#safe-list
+        {
+           display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;}
+            
+            .event-card,.alert-card,.safe-card{
+                background-color: aqua;
+                border-radius: 10px;
+                padding: 15px;
+                box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+                transform: transformation 0.2sec;
+                position: relative;
+            }
+
+         
+
+        
+
     </style>
 
 </head>
