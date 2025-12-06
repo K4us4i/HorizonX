@@ -1,133 +1,208 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Community Events & Alerts – Kathmandu</title>
     <style>
-        body{
-            font-family: 'Courier New', Courier, monospace;
-            background-color: rgb(234, 241, 241);
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #fef9f4;
             max-width: 900px;
             margin: 0 auto;
             padding: 20px;
         }
-        h1,h2{
+
+        h1, h2 {
             text-align: center;
             color: #333;
-            color: rgb(13, 13, 13);
         }
-        #searchBar{
-            width:100% ;
-            padding: 10px ;
-            margin: 15px;
-            border: radius 6px; ;
-            border: 1px solid;
-            ;
+
+        #searchBar {
+            width: 100%;
+            padding: 10px;
+            margin: 15px 0;
+            border-radius: 6px;
+            border: 1px solid #ccc;
         }
-        #stats{
+
+        #stats {
             text-align: center;
             margin-bottom: 20px;
             font-size: 0.95em;
-            color: #1d3557;
+            color: #555;
         }
-        #event-list , #alert-list,#safe-list
-        {
-           display: grid;
+
+        /* CARD STYLING */
+        #event-list, #alert-list, #safe-list {
+            display: grid;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 15px;
-            margin-bottom: 30px;}
-
-            .event-card,.alert-card,.safe-card{
-                background-color: aqua;
-                border-radius: 10px;
-                padding: 15px;
-                box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-                transform: transformation 0.2sec;
-                position: relative;
-            }
-            .event-card:hover,.alert-card:hover,.safe-card:hover
-            {
-                transform: scale(1.02);
-            }
-            .event-title,.alert-title,.safe-title
-            {
-                font-weight: bold;
-                font-size: 1.2em;
-            }
-        .event-date,.event-location,.event-category{
-            font-size: 0.9em;
-            color:rosybrown;
-            margin: 2px; 
+            margin-bottom: 30px;
         }
-        .event-desc{
-            margin:8px ;
+
+        .event-card, .alert-card, .safe-card {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+            position: relative;
+        }
+
+        .event-card:hover, .alert-card:hover, .safe-card:hover {
+            transform: scale(1.02);
+        }
+
+        .event-title, .alert-title, .safe-title {
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .event-date, .event-location, .event-category {
+            font-size: 0.9em;
+            color: #555;
+            margin-top: 2px;
+        }
+
+        .event-desc {
+            margin-top: 8px;
             font-size: 0.95em;
             cursor: pointer;
         }
 
-         
+        .badge {
+            display: inline-block;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            margin-top: 5px;
+            color: white;
+        }
 
-        
+        .category-Cultural { background-color: #1d3557; }
+        .category-Workshop { background-color: #457b9d; }
+        .category-Sports { background-color: #2a9d8f; }
+        .category-Alert { background-color: #e63946; }
 
+        button {
+            background-color: #ff8c42;
+            color: white;
+            border: none;
+            padding: 10px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 0.95em;
+        }
+
+        button:hover {
+            background-color: #ff6f1e;
+        }
+
+        .fake-btn { background-color: #e63946; }
+        .fake-btn:hover { background-color: #b22234; }
+        .interested-btn { background-color: #2a9d8f; margin-left: 5px; }
+        .interested-btn:hover { background-color: #21867a; }
+
+        #overlay {
+            display: none;
+            position: fixed;
+            top:0; left:0;
+            width: 100%; height:100%;
+            background-color: rgba(0,0,0,0.4);
+            z-index: 500;
+        }
+
+        #addEventForm {
+            display: none;
+            position: fixed;
+            top:50%;
+            left:50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+            z-index: 1000;
+            width: 300px;
+        }
+
+        #addEventForm input, #addEventForm textarea, #addEventForm select {
+            width: 100%;
+            margin: 5px 0;
+            padding: 6px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        .short-desc { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+        .full-desc { display: none; white-space: normal; }
     </style>
-
 </head>
 <body>
-    <h1>Community Events</h1>
-    <input type="text" id="searchBar" placeholder="Search by name, location, category..." onkeyup="filterEvents()">
 
-    <div id="stats">
+<h1>Community Events – Kathmandu</h1>
+
+<!-- SEARCH -->
+<input type="text" id="searchBar" placeholder="Search by name, location, category..." onkeyup="filterEvents()">
+
+<!-- STATS -->
+<div id="stats">
     Total Events: <span id="totalEvents">5</span> | Reported Events: <span id="reportedEvents">0</span>
-    </div>
+</div>
 
-    <div id="event-list">
-        <div class="event-card" data-category="Cultural" data-reports="0">
+<!-- COMMUNITY EVENTS -->
+<div id="event-list">
+    <!-- Event 1 -->
+    <div class="event-card" data-category="Cultural" data-reports="0">
         <div class="event-title">Indra Jatra Festival</div>
         <div class="event-date">14 September 2025</div>
         <div class="event-location">Basantapur, Kathmandu</div>
         <div class="event-category badge category-Cultural">Cultural</div>
         <div class="event-desc short-desc" onclick="toggleDesc(this)">
-        A major cultural festival of Kathmandu celebrating living goddess Kumari... <span style="color:#1d3557;font-weight:bold;">[Details]</span>
+            A major cultural festival of Kathmandu celebrating living goddess Kumari... <span style="color:#1d3557;font-weight:bold;">[Details]</span>
         </div>
-    </div>
-    <div class="full-desc">
-    A major cultural festival of Kathmandu celebrating living goddess Kumari and chariot processions. Traditional dances and cultural performances happen throughout the city, attracting tourists and locals alike.
-    </div>
-    <button class="fake-btn" onclick="reportFake(this)">Report Fake Event</button>
-    <button class="interested-btn" onclick="markInterested(this)">Interested</button>
+        <div class="full-desc">
+            A major cultural festival of Kathmandu celebrating living goddess Kumari and chariot processions. Traditional dances and cultural performances happen throughout the city, attracting tourists and locals alike.
+        </div>
+        <button class="fake-btn" onclick="reportFake(this)">Report Fake Event</button>
+        <button class="interested-btn" onclick="markInterested(this)">Interested</button>
     </div>
 
+    <!-- Event 2 -->
     <div class="event-card" data-category="Cultural" data-reports="0">
         <div class="event-title">Bisket Jatra</div>
         <div class="event-date">12 April 2025</div>
         <div class="event-location">Bhaktapur, Kathmandu Valley</div>
         <div class="event-category badge category-Cultural">Cultural</div>
         <div class="event-desc short-desc" onclick="toggleDesc(this)">
-        A vibrant New Year celebration with chariot pulling... <span style="color:#1d3557;font-weight:bold;">[Details]</span>
+            A vibrant New Year celebration with chariot pulling... <span style="color:#1d3557;font-weight:bold;">[Details]</span>
         </div>
         <div class="full-desc">
-        A vibrant New Year celebration with chariot pulling, traditional music, and masked dances in Bhaktapur. The festival is highly popular and attracts crowds from across Nepal.
+            A vibrant New Year celebration with chariot pulling, traditional music, and masked dances in Bhaktapur. The festival is highly popular and attracts crowds from across Nepal.
         </div>
         <button class="fake-btn" onclick="reportFake(this)">Report Fake Event</button>
         <button class="interested-btn" onclick="markInterested(this)">Interested</button>
     </div>
 
+    <!-- Event 3 -->
     <div class="event-card" data-category="Workshop" data-reports="0">
         <div class="event-title">Kathmandu Art Workshop</div>
         <div class="event-date">20 October 2025</div>
         <div class="event-location">Patan, Kathmandu</div>
         <div class="event-category badge category-Workshop">Workshop</div>
         <div class="event-desc short-desc" onclick="toggleDesc(this)">
-        Local artists teach traditional painting and sculpture... <span style="color:#1d3557;font-weight:bold;">[Details]</span>
+            Local artists teach traditional painting and sculpture... <span style="color:#1d3557;font-weight:bold;">[Details]</span>
         </div>
         <div class="full-desc">
-        Local artists teach traditional painting and sculpture techniques. Participants learn about Nepalese cultural heritage, materials, and techniques in a hands-on workshop.
+            Local artists teach traditional painting and sculpture techniques. Participants learn about Nepalese cultural heritage, materials, and techniques in a hands-on workshop.
         </div>
         <button class="fake-btn" onclick="reportFake(this)">Report Fake Event</button>
         <button class="interested-btn" onclick="markInterested(this)">Interested</button>
     </div>
 
+    <!-- Event 4 -->
     <div class="event-card" data-category="Sports" data-reports="0">
         <div class="event-title">Kathmandu Marathon</div>
         <div class="event-date">5 December 2025</div>
@@ -143,6 +218,7 @@
         <button class="interested-btn" onclick="markInterested(this)">Interested</button>
     </div>
 
+    <!-- Event 5 -->
     <div class="event-card" data-category="Workshop" data-reports="0">
         <div class="event-title">Nepalese Cooking Class</div>
         <div class="event-date">28 November 2025</div>
@@ -157,12 +233,14 @@
         <button class="fake-btn" onclick="reportFake(this)">Report Fake Event</button>
         <button class="interested-btn" onclick="markInterested(this)">Interested</button>
     </div>
+</div>
 
+<!-- Add Event Button -->
+<button onclick="showForm()">Add Event</button>
 
-    <button onclick="showForm()">Add Event</button>
-
-    <h2>Disaster Alerts</h2>
-    <div id="alert-list">
+<!-- DISASTER ALERTS -->
+<h2>Disaster Alerts</h2>
+<div id="alert-list">
     <div class="alert-card">
         <div class="alert-title">Flood Warning</div>
         <div>Low-lying areas near Bagmati River may experience flooding during heavy rain. Stay alert and avoid riverbanks.</div>
@@ -173,6 +251,7 @@
     </div>
 </div>
 
+<!-- SAFE LOCATIONS -->
 <h2>Safe Locations / Evacuation Centers</h2>
 <div id="safe-list">
     <div class="safe-card">
@@ -250,8 +329,6 @@
 
     updateStats();
 </script>
-
-
 
 </body>
 </html>
