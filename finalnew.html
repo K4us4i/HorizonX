@@ -7,7 +7,7 @@
     <style>
         body{
             font-family: 'Courier New', Courier, monospace;
-          background-color: #fef9f4;
+            background-color: rgb(234, 241, 241);
             max-width: 900px;
             margin: 0 auto;
             padding: 20px;
@@ -15,6 +15,7 @@
         h1,h2{
             text-align: center;
             color: #333;
+            color: rgb(13, 13, 13);
         }
         #searchBar{
             width:100% ;
@@ -200,7 +201,114 @@
         <button class="interested-btn" onclick="markInterested(this)">Interested</button>
     </div>
 
+    <div class="event-card" data-category="Workshop" data-reports="0">
+        <div class="event-title">Nepalese Cooking Class</div>
+        <div class="event-date">28 November 2025</div>
+        <div class="event-location">Thamel, Kathmandu</div>
+        <div class="event-category badge category-Workshop">Workshop</div>
+        <div class="event-desc short-desc" onclick="toggleDesc(this)">
+            Learn to cook traditional Nepalese dishes with local chefs... <span style="color:#1d3557;font-weight:bold;">[Details]</span>
+        </div>
+        <div class="full-desc">
+            Learn to cook traditional Nepalese dishes with local chefs. Includes momo, dal bhat, and other popular local recipes. Hands-on session for beginners and enthusiasts.
+        </div>
+        <button class="fake-btn" onclick="reportFake(this)">Report Fake Event</button>
+        <button class="interested-btn" onclick="markInterested(this)">Interested</button>
+    </div>
+
+
     <button onclick="showForm()">Add Event</button>
+
+    <h2>Disaster Alerts</h2>
+    <div id="alert-list">
+    <div class="alert-card">
+        <div class="alert-title">Flood Warning</div>
+        <div>Low-lying areas near Bagmati River may experience flooding during heavy rain. Stay alert and avoid riverbanks.</div>
+    </div>
+    <div class="alert-card">
+        <div class="alert-title">Road Closure</div>
+        <div>Road near Thamel will be closed for construction on 15th Dec 2025. Use alternative routes.</div>
+    </div>
+</div>
+
+<h2>Safe Locations / Evacuation Centers</h2>
+<div id="safe-list">
+    <div class="safe-card">
+        <div class="safe-title">Swayambhu Open Ground</div>
+        <div>Open ground near Swayambhu Temple, Kathmandu. Safe during flood or earthquake.</div>
+    </div>
+    <div class="safe-card">
+        <div class="safe-title">Boudhanath School Playground</div>
+        <div>Spacious area for emergency gathering, Kathmandu.</div>
+    </div>
+</div>
+
+<!-- Popup Form -->
+<div id="overlay"></div>
+<div id="addEventForm">
+    <h2>Add Event</h2>
+    <input type="text" id="newTitle" placeholder="Event Title">
+    <input type="date" id="newDate">
+    <input type="text" id="newLocation" placeholder="Location">
+    <select id="newCategory">
+        <option value="">Select Category</option>
+        <option value="Cultural">Cultural</option>
+        <option value="Workshop">Workshop</option>
+        <option value="Sports">Sports</option>
+        <option value="Alert">Alert</option>
+    </select>
+    <textarea id="newDesc" placeholder="Description" rows="3"></textarea>
+    <button onclick="submitEvent()">Submit Event</button>
+    <button onclick="closeForm()" style="background-color:#555;">Cancel</button>
+</div>
+
+<script>
+    function showForm(){ document.getElementById('addEventForm').style.display='block'; document.getElementById('overlay').style.display='block'; }
+    function closeForm(){ document.getElementById('addEventForm').style.display='none'; document.getElementById('overlay').style.display='none'; }
+    function updateStats(){
+        let total=document.querySelectorAll('#event-list .event-card').length;
+        let reported=document.querySelectorAll('#event-list .event-card[data-reports="reported"]').length;
+        document.getElementById('totalEvents').innerText=total;
+        document.getElementById('reportedEvents').innerText=reported;
+    }
+
+    function submitEvent(){
+        let title=document.getElementById('newTitle').value.trim();
+        let date=document.getElementById('newDate').value;
+        let location=document.getElementById('newLocation').value.trim();
+        let category=document.getElementById('newCategory').value;
+        let desc=document.getElementById('newDesc').value.trim();
+        if(!title||!date||!location||!category||!desc){ alert("Please fill in all fields!"); return; }
+
+        let card=document.createElement('div');
+        card.className='event-card';
+        card.setAttribute('data-category',category);
+        card.setAttribute('data-reports',0);
+        card.innerHTML=`
+            <div class="event-title">${title}</div>
+            <div class="event-date">${date}</div>
+            <div class="event-location">${location}</div>
+            <div class="event-category badge category-${category}">${category}</div>
+            <div class="event-desc short-desc" onclick="toggleDesc(this)">${desc.substring(0,50)}... <span style="color:#1d3557;font-weight:bold;">[Details]</span></div>
+            <div class="full-desc">${desc}</div>
+            <button class="fake-btn" onclick="reportFake(this)">Report Fake Event</button>
+            <button class="interested-btn" onclick="markInterested(this)">Interested</button>
+        `;
+        document.getElementById('event-list').appendChild(card);
+        closeForm();
+        document.getElementById('newTitle').value=''; document.getElementById('newDate').value='';
+        document.getElementById('newLocation').value=''; document.getElementById('newCategory').value=''; document.getElementById('newDesc').value='';
+        updateStats();
+    }
+
+    function reportFake(btn){ let card=btn.closest('.event-card'); card.setAttribute('data-reports','reported'); card.style.borderColor='#e63946'; btn.disabled=true; btn.innerText='Reported'; alert("Thank you. This event has been reported for review."); updateStats(); }
+    function markInterested(btn){ let card=btn.closest('.event-card'); card.style.backgroundColor='#d1f2eb'; btn.disabled=true; btn.innerText="Marked Interested"; }
+    function filterEvents(){ let input=document.getElementById('searchBar').value.toLowerCase(); let cards=document.querySelectorAll('#event-list .event-card'); cards.forEach(card=>{ let title=card.querySelector('.event-title').innerText.toLowerCase(); let location=card.querySelector('.event-location').innerText.toLowerCase(); let category=card.querySelector('.event-category').innerText.toLowerCase(); if(title.includes(input)||location.includes(input)||category.includes(input)){ card.style.display='block'; }else{ card.style.display='none'; } }); }
+    function toggleDesc(descDiv){ let fullDesc=descDiv.nextElementSibling; if(fullDesc.style.display==="none"||fullDesc.style.display===""){ fullDesc.style.display="block"; descDiv.style.display="none"; } }
+
+    updateStats();
+</script>
+
 
 
 </body>
