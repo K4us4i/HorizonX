@@ -2,19 +2,22 @@
 <html>
 <head>
     <title>Community Connectivity</title>
-</head>
+</head> 
 <body>
-    <div clas="container">
     <h2>Events</h2>
-    <form method=[POST]>
-        <button>Today</button>
-        <button>This week</button>
-        <button>This month</button>
-    </form>
-    </div>
-    <div class="container">
+    <button onclick="loadEvents()">Show Events</button>
+    <div id="events"></div>
+    <script>
+    function loadEvents() {
+    fetch("/events")
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById("events").innerHTML = JSON.stringify(data);
+        });
+}
+</script>
+<div class="container">
     <h2>Disaster News/Alert</h2>
     </div>
-
 </body>
-</html>
+</html>  
