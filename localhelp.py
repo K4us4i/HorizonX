@@ -16,7 +16,7 @@ def get_events():
     response = requests.get(url, headers=headers)
     data = response.json()
 
-    return jsonify(data)
+    # return jsonify(data)
 
 @app.route("/alerts")
 def get_alerts():
@@ -24,7 +24,7 @@ def get_alerts():
     response = requests.get(url)
     data = response.json()
 
-    return jsonify(data)
+    # return jsonify(data)
 
 @app.route("/")
 def home():
