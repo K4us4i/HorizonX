@@ -36,7 +36,7 @@
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 15px;
             margin-bottom: 30px;}
-            
+
             .event-card,.alert-card,.safe-card{
                 background-color: aqua;
                 border-radius: 10px;
@@ -45,6 +45,25 @@
                 transform: transformation 0.2sec;
                 position: relative;
             }
+            .event-card:hover,.alert-card:hover,.safe-card:hover
+            {
+                transform: scale(1.02);
+            }
+            .event-title,.alert-title,.safe-title
+            {
+                font-weight: bold;
+                font-size: 1.2em;
+            }
+        .event-date,.event-location,.event-category{
+            font-size: 0.9em;
+            color:rosybrown;
+            margin: 2px; 
+        }
+        .event-desc{
+            margin:8px ;
+            font-size: 0.95em;
+            cursor: pointer;
+        }
 
          
 
