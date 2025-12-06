@@ -142,6 +142,21 @@
         <button class="interested-btn" onclick="markInterested(this)">Interested</button>
     </div>
 
+    <div class="event-card" data-category="Workshop" data-reports="0">
+        <div class="event-title">Nepalese Cooking Class</div>
+        <div class="event-date">28 November 2025</div>
+        <div class="event-location">Thamel, Kathmandu</div>
+        <div class="event-category badge category-Workshop">Workshop</div>
+        <div class="event-desc short-desc" onclick="toggleDesc(this)">
+            Learn to cook traditional Nepalese dishes with local chefs... <span style="color:#1d3557;font-weight:bold;">[Details]</span>
+        </div>
+        <div class="full-desc">
+            Learn to cook traditional Nepalese dishes with local chefs. Includes momo, dal bhat, and other popular local recipes. Hands-on session for beginners and enthusiasts.
+        </div>
+        <button class="fake-btn" onclick="reportFake(this)">Report Fake Event</button>
+        <button class="interested-btn" onclick="markInterested(this)">Interested</button>
+    </div>
+
 
     <button onclick="showForm()">Add Event</button>
 
@@ -167,6 +182,25 @@
         <div class="safe-title">Boudhanath School Playground</div>
         <div>Spacious area for emergency gathering, Kathmandu.</div>
     </div>
+</div>
+
+<!-- Popup Form -->
+<div id="overlay"></div>
+<div id="addEventForm">
+    <h2>Add Event</h2>
+    <input type="text" id="newTitle" placeholder="Event Title">
+    <input type="date" id="newDate">
+    <input type="text" id="newLocation" placeholder="Location">
+    <select id="newCategory">
+        <option value="">Select Category</option>
+        <option value="Cultural">Cultural</option>
+        <option value="Workshop">Workshop</option>
+        <option value="Sports">Sports</option>
+        <option value="Alert">Alert</option>
+    </select>
+    <textarea id="newDesc" placeholder="Description" rows="3"></textarea>
+    <button onclick="submitEvent()">Submit Event</button>
+    <button onclick="closeForm()" style="background-color:#555;">Cancel</button>
 </div>
 
 
