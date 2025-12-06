@@ -1,5 +1,7 @@
 # Local Community Help
 # Community Connectivity
-print("Event")
-print("Disaster alert")
+import requests
+response = requests.get("https://calendar.bloggernepal.com/api/today")
+data=response.json()
+
 
