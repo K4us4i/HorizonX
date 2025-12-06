@@ -1,7 +1,7 @@
 # Local Community Help
 # Community Connectivity
 from flask import Flask, render_template, request, jsonify
-import requests 
+import requests  # type: ignore
 
 app = Flask(__name__)
 
