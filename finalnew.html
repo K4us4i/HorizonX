@@ -7,14 +7,14 @@
     <style>
         body{
             font-family: 'Courier New', Courier, monospace;
-            background-color: aqua;
+            background-color: rgb(234, 241, 241);
             max-width: 900px;
             margin: auto;
             padding: 20px;
         }
         h1,h2{
             text-align: center;
-            color: bisque;
+            color: rgb(13, 13, 13);
         }
         #searchBar{
             width:100% ;
@@ -202,6 +202,53 @@
     <button onclick="submitEvent()">Submit Event</button>
     <button onclick="closeForm()" style="background-color:#555;">Cancel</button>
 </div>
+
+<script>
+    function showForm(){ document.getElementById('addEventForm').style.display='block'; document.getElementById('overlay').style.display='block'; }
+    function closeForm(){ document.getElementById('addEventForm').style.display='none'; document.getElementById('overlay').style.display='none'; }
+    function updateStats(){
+        let total=document.querySelectorAll('#event-list .event-card').length;
+        let reported=document.querySelectorAll('#event-list .event-card[data-reports="reported"]').length;
+        document.getElementById('totalEvents').innerText=total;
+        document.getElementById('reportedEvents').innerText=reported;
+    }
+
+    function submitEvent(){
+        let title=document.getElementById('newTitle').value.trim();
+        let date=document.getElementById('newDate').value;
+        let location=document.getElementById('newLocation').value.trim();
+        let category=document.getElementById('newCategory').value;
+        let desc=document.getElementById('newDesc').value.trim();
+        if(!title||!date||!location||!category||!desc){ alert("Please fill in all fields!"); return; }
+
+        let card=document.createElement('div');
+        card.className='event-card';
+        card.setAttribute('data-category',category);
+        card.setAttribute('data-reports',0);
+        card.innerHTML=`
+            <div class="event-title">${title}</div>
+            <div class="event-date">${date}</div>
+            <div class="event-location">${location}</div>
+            <div class="event-category badge category-${category}">${category}</div>
+            <div class="event-desc short-desc" onclick="toggleDesc(this)">${desc.substring(0,50)}... <span style="color:#1d3557;font-weight:bold;">[Details]</span></div>
+            <div class="full-desc">${desc}</div>
+            <button class="fake-btn" onclick="reportFake(this)">Report Fake Event</button>
+            <button class="interested-btn" onclick="markInterested(this)">Interested</button>
+        `;
+        document.getElementById('event-list').appendChild(card);
+        closeForm();
+        document.getElementById('newTitle').value=''; document.getElementById('newDate').value='';
+        document.getElementById('newLocation').value=''; document.getElementById('newCategory').value=''; document.getElementById('newDesc').value='';
+        updateStats();
+    }
+
+    function reportFake(btn){ let card=btn.closest('.event-card'); card.setAttribute('data-reports','reported'); card.style.borderColor='#e63946'; btn.disabled=true; btn.innerText='Reported'; alert("Thank you. This event has been reported for review."); updateStats(); }
+    function markInterested(btn){ let card=btn.closest('.event-card'); card.style.backgroundColor='#d1f2eb'; btn.disabled=true; btn.innerText="Marked Interested"; }
+    function filterEvents(){ let input=document.getElementById('searchBar').value.toLowerCase(); let cards=document.querySelectorAll('#event-list .event-card'); cards.forEach(card=>{ let title=card.querySelector('.event-title').innerText.toLowerCase(); let location=card.querySelector('.event-location').innerText.toLowerCase(); let category=card.querySelector('.event-category').innerText.toLowerCase(); if(title.includes(input)||location.includes(input)||category.includes(input)){ card.style.display='block'; }else{ card.style.display='none'; } }); }
+    function toggleDesc(descDiv){ let fullDesc=descDiv.nextElementSibling; if(fullDesc.style.display==="none"||fullDesc.style.display===""){ fullDesc.style.display="block"; descDiv.style.display="none"; } }
+
+    updateStats();
+</script>
 
 
 
