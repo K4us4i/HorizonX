@@ -18,4 +18,20 @@ def get_events():
 
     return jsonify(data)
 
+@app.route("/alerts")
+def get_alerts():
+    url = "https://api.weather.gov/alerts/active"
+    response = requests.get(url)
+    data = response.json()
+
+    return jsonify(data)
+
+@app.route("/")
+def home():
+    return render_template("page.html")
+
+
+if __name__ == "__main__":
+    app.run(debug=True)
+
 
