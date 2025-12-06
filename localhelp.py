@@ -5,24 +5,17 @@ import requests # type: ignore
 
 app = Flask(__name__)
 
-@app.route("/", methods=["GET", "POST"])
-def home():
-    result = None
+@app.route("/events")
+def get_events():
+    url = "https://calendar.bloggernepal.com/api/today"
+    
+    headers = {
+        "Authorization": "Bearer YOUR_EVENTBRITE_TOKEN"
+    }
 
-    if request.method == "POST":
-        event = request.form.get("event")
-        url = "https://calendar.bloggernepal.com/api/today"
+    response = requests.get(url, headers=headers)
+    data = response.json()
 
-        headers = {"Content-Type": "application/json"}
-        payload = {"text": event_text} # type: ignore
+    return jsonify(data)
 
-        response = requests.post(url, json=payload, headers=headers)
-        data = response.json()
-
-        result = data["result"]["type"]
-
-    return render_template("page.html", result=result)
-
-if __name__ == "__main__":
-    app.run(debug=True)
 

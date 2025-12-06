@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<<<<<<< HEAD
 <style>
     body{
         background-color: bisque;
@@ -22,3 +23,34 @@
 </style>
 <body>
      
+=======
+    <title>Community Connectivity</title>
+</head> 
+<body>
+    <h2>Events</h2>
+    <button onclick="loadEvents()">Show Events</button>
+    <div id="events"></div>
+
+    <h2>Disaster Alerts</h2>
+    <button onclick="loadAlerts()">Show Alerts</button>
+    <div id="alerts"></div>
+
+    <script>
+    function loadEvents() {
+    fetch("/events")
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById("events").innerHTML = JSON.stringify(data);
+        });
+    }
+    function loadAlerts() {
+    fetch("/alerts")
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById("alerts").innerHTML = JSON.stringify(data);
+        });
+    }
+    </script>
+</body>
+</html>  
+>>>>>>> 05f2a3a7167481fb03790b2f5437d244f075134f
